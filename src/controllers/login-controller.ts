@@ -13,14 +13,14 @@ const login = asyncHandler(async (req: Request, res: Response) => {
   // Find admin using nickname
   const admin = await Admin.findOne({ nickname: body.nickname as string });
   if (!admin) {
-    res.status(422);
-    throw new Error('wrong email or password');
+    res.status(400);
+    throw new Error('wrong nickname or password');
   }
 
   // Check if password is valid
   if (!(await bcrypt.compare(body.password, admin.password))) {
-    res.status(422);
-    throw new Error('wrong email or password');
+    res.status(400);
+    throw new Error('wrong nickname or password');
   }
 
   // Generate JWT token
