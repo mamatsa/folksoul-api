@@ -1,4 +1,4 @@
-import Joi from 'joi';
+import Joi from 'joi'
 
 const loginSchema = Joi.object({
   nickname: Joi.string()
@@ -17,6 +17,6 @@ const loginSchema = Joi.object({
     'string.base': 'password field should be string',
     'string.min': 'password field should be at least 3 characters long',
   }),
-});
+})
 
-export default loginSchema;
+export default loginSchema

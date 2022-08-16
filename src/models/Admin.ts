@@ -1,8 +1,8 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model } from 'mongoose'
 
 interface IAdmin {
-  nickname: string;
-  password: string;
+  nickname: string
+  password: string
 }
 
 const adminSchema = new Schema<IAdmin>({
@@ -14,8 +14,8 @@ const adminSchema = new Schema<IAdmin>({
     type: String,
     required: true,
   },
-});
+})
 
-const Admin = model<IAdmin>('Admin', adminSchema);
+const Admin = model<IAdmin>('Admin', adminSchema)
 
-export default Admin;
+export default Admin
