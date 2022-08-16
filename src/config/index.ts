@@ -1,1 +1,1 @@
-export { default as connectMongo } from './connect-mongo';
+export { default as connectMongo } from './connect-mongo'
