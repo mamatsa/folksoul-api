@@ -7,7 +7,7 @@ const swaggerMiddleware: any = () => {
     customSiteTitle: 'Admin panel API Specs',
   }
 
-  const swaggerDocument = YAML.load('./src/config/swagger.yaml')
+  const swaggerDocument = YAML.load('./build/config/swagger.yaml')
   return [SwaggerUI.serve, SwaggerUI.setup(swaggerDocument, options)]
 }
 
