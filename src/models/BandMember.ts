@@ -6,10 +6,7 @@ interface IBandMember {
 }
 
 const bandMemberSchema = new Schema<IBandMember>({
-  avatarUrl: {
-    type: String,
-    required: true,
-  },
+  avatarUrl: String,
   name: {
     type: String,
     required: true,

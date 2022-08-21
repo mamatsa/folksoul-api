@@ -2,7 +2,7 @@ import 'dotenv/config'
 import express from 'express'
 import cors from 'cors'
 import { connectMongo } from 'config'
-import { loginRoute } from 'routes'
+import { loginRoute, bandMemberRoutes } from 'routes'
 import {
   errorMiddleware,
   swaggerMiddleware,
@@ -22,8 +22,10 @@ server.use(express.json())
 server.use(express.urlencoded({ extended: false }))
 
 server.use(loginRoute)
+server.use(bandMemberRoutes)
 
 server.use(errorMiddleware)
+
 server.use('/api-docs', swaggerMiddleware())
 
 server.listen(process.env.PORT)
