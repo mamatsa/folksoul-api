@@ -3,13 +3,20 @@ import express from 'express'
 import cors from 'cors'
 import { connectMongo } from 'config'
 import { loginRoute } from 'routes'
-import { errorMiddleware, swaggerMiddleware } from 'middlewares'
+import {
+  errorMiddleware,
+  swaggerMiddleware,
+  multerMiddleware,
+} from 'middlewares'
 
 connectMongo()
 
 const server = express()
 
 server.use(cors())
+
+server.use(multerMiddleware)
+server.use('/avatars', express.static('images'))
 
 server.use(express.json())
 server.use(express.urlencoded({ extended: false }))
