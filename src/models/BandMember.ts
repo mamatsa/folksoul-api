@@ -32,6 +32,6 @@ const bandMemberSchema = new Schema<IBandMember>({
   },
 })
 
-const BandMember = model<IBandMember>('Admin', bandMemberSchema)
+const BandMember = model<IBandMember>('BandMember', bandMemberSchema)
 
 export default BandMember
