@@ -4,7 +4,7 @@ const loginSchema = Joi.object({
   nickname: Joi.string()
     .required()
     .min(3)
-    .pattern(new RegExp('^[a-z0-9]*$'))
+    .pattern(new RegExp('^[a-z0-9ა-ჰ]*$'))
     .messages({
       'any.required': 'nickname field is required',
       'string.base': 'nickname field should be string',

@@ -6,14 +6,15 @@ import {
   updateMember,
   deleteMember,
 } from 'controllers'
-import { multerMiddleware } from 'middlewares'
+import { multerMiddleware, validateBody } from 'middlewares'
+import { bandMemberSchema } from 'schemas'
 
 const router = Router()
 
 router.get('/band-members', getMembers)
-router.post('/band-member', addMember)
+router.post('/band-member', validateBody(bandMemberSchema), addMember)
 router.put('/band-member/avatar/:id', multerMiddleware, addMemberAvatar)
-router.put('/band-member/:id', updateMember)
+router.put('/band-member/:id', validateBody(bandMemberSchema), updateMember)
 router.delete('/band-member/:id', deleteMember)
 
 export default router

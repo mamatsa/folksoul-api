@@ -4,7 +4,7 @@ interface IBandMember {
   avatarUrl?: string
   name: string
   instrument: string
-  orbitWidth: string
+  orbitWidth: number
   color: string
   bio: string
 }
@@ -21,7 +21,7 @@ const bandMemberSchema = new Schema<IBandMember>(
       required: true,
     },
     orbitWidth: {
-      type: String,
+      type: Number,
       required: true,
     },
     color: {

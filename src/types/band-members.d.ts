@@ -1,10 +1,9 @@
 export type AddMemberBody = {
   name: string
   instrument: string
-  orbitWidth: string
+  orbitWidth: number
   color: string
   bio: string
-  imageUrl?: string
 }
 
 export type MemberParams = {
