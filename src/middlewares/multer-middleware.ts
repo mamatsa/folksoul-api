@@ -3,7 +3,7 @@ import multer from 'multer'
 
 // Image save destination in filesystem
 const fileStorage = multer.diskStorage({
-  destination: (_: Request, file: any, cb) => {
+  destination: (_: Request, __: any, cb) => {
     cb(null, 'images')
   },
   filename: (_: Request, file, cb) => {
@@ -27,6 +27,7 @@ const fileFilter = (_: Request, file: any, cb: any) => {
 const uploadImage = multer({
   storage: fileStorage,
   fileFilter: fileFilter,
+  limits: { fileSize: 3145728 },
 }).single('image')
 
 export default uploadImage
