@@ -6,7 +6,12 @@ import {
   updateMember,
   deleteMember,
 } from 'controllers'
-import { multerMiddleware, validateBody, protect } from 'middlewares'
+import {
+  multerMiddleware,
+  validateBody,
+  validateParams,
+  protect,
+} from 'middlewares'
 import { bandMemberSchema } from 'schemas'
 
 const router = Router()
@@ -16,15 +21,17 @@ router.post('/band-member', protect, validateBody(bandMemberSchema), addMember)
 router.put(
   '/band-member/avatar/:id',
   protect,
+  validateParams,
   multerMiddleware,
   addMemberAvatar
 )
 router.put(
   '/band-member/:id',
   protect,
+  validateParams,
   validateBody(bandMemberSchema),
   updateMember
 )
-router.delete('/band-member/:id', protect, deleteMember)
+router.delete('/band-member/:id', protect, validateParams, deleteMember)
 
 export default router

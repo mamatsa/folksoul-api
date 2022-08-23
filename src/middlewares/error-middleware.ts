@@ -15,7 +15,7 @@ const errorHandler = (
   } else {
     res.json({
       status: 'fail',
-      data: { error: error.message },
+      data: { message: error.message },
     })
   }
 }
