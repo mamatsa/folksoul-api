@@ -5,11 +5,19 @@ info:
   version: 1.0.0
 
 servers:
-  - url: http://localhost:3000/
+  - url: http://localhost:8000/
     description: local server
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
 paths:
   /login:
     post:
+      summary: Login with admin credentials
       tags:
         - Authentication
       requestBody:
@@ -32,7 +40,223 @@ paths:
       responses:
         '200':
           description: Successfully logged in
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  data:
+                    type: object
+                    properties:
+                      nickname:
+                        type: string
+                      JWTToken:
+                        type: string
+                    example:
+                      nickname: admin
+                      JWTToken: 123
         '400':
           description: Wrong nickname or password
         '422':
           description: Invalid request body formation
+
+  /band-members:
+    get:
+      summary: Get band members list
+      tags:
+        - Band Members
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Band members received successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  data:
+                    type: object
+                    properties:
+                      bandMembers:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            _id:
+                              type: string
+                            instrument:
+                              type: string
+                            orbitWidth:
+                              type: number
+                            color:
+                              type: string
+                            bio:
+                              type: string
+                        example:
+                          _id: 123
+                          name: ხვიჩა
+                          instrument: გიტარა
+                          orbitWidth: 10
+                          color: '#ffffff'
+                          bio: ბიოგრაფია
+        '401':
+          description: Not authorized
+
+  /band-member:
+    post:
+      summary: Add band member
+      tags:
+        - Band Members
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                instrument:
+                  type: string
+                orbitWidth:
+                  type: number
+                color:
+                  type: string
+                bio:
+                  type: string
+              example:
+                name: ხვიჩა
+                instrument: გიტარა
+                orbitWidth: 10
+                color: '#FFFFFF'
+                bio: ბიოგრაფია
+              required:
+                - name
+                - instrument
+                - orbitWidth
+                - color
+                - bio
+      responses:
+        '200':
+          description: Band member added successfully
+        '401':
+          description: Not authorized
+        '422':
+          description: Invalid request body formation
+  /band-member/avatar/{id}:
+    put:
+      summary: Add avatar to band member
+      tags:
+        - Band Members
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Band member id
+      requestBody:
+        description: Only png, jpg and jpeg photo formats are allowed
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                image:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: Avatar added successfully
+        '400':
+          description: Wrong band member id
+        '401':
+          description: Not authorized
+        '422':
+          description: No image or invalid id provided
+  /band-member/{id}:
+    put:
+      summary: Update band member
+      tags:
+        - 'Band Members'
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Band member id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                instrument:
+                  type: string
+                orbitWidth:
+                  type: number
+                color:
+                  type: string
+                bio:
+                  type: string
+              example:
+                name: ხვიჩა
+                instrument: პიანინო
+                orbitWidth: 12
+                color: '#000000'
+                bio: გასაოცარი ბიოგრაფია
+              required:
+                - name
+                - instrument
+                - orbitWidth
+                - color
+                - bio
+      responses:
+        '200':
+          description: Band member updated successfully
+        '400':
+          description: Wrong band member id
+        '401':
+          description: Not authorized
+        '422':
+          description: Invalid request body or id param formation
+    delete:
+      summary: Delete band member
+      tags:
+        - 'Band Members'
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Band member id
+      responses:
+        '200':
+          description: Band member deleted successfully
+        '400':
+          description: Wrong band member id
+        '401':
+          description: Not authorized
+        '422':
+          description: Band member id provided in invalid format
