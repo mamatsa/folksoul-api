@@ -36,12 +36,15 @@ const bandMemberSchema = Joi.object({
       'string.pattern.base':
         'color field should be in upper case full hex format',
     }),
-  bio: Joi.string().required().pattern(new RegExp('^[ა-ჰ]*$')).messages({
-    'any.required': 'bio field is required',
-    'string.base': 'bio field should be string',
-    'string.pattern.base':
-      'bio should only contain georgian language characters',
-  }),
+  bio: Joi.string()
+    .required()
+    .pattern(new RegExp(/^[ა-ჰ\s]*$/))
+    .messages({
+      'any.required': 'bio field is required',
+      'string.base': 'bio field should be string',
+      'string.pattern.base':
+        'bio should only contain georgian language characters',
+    }),
 })
 
 export default bandMemberSchema
