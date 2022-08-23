@@ -4,14 +4,11 @@ const errorHandler = (
   error: any,
   _: Request,
   res: Response,
-  next: NextFunction
+  __: NextFunction
 ) => {
-  const statusCode = res.statusCode ? res.statusCode : 500
-
-  res.status(statusCode)
-
-  if (statusCode === 500) {
-    res.json({
+  console.log(res.statusCode)
+  if (!res.statusCode || res.statusCode === 200) {
+    res.status(500).json({
       status: 'error',
       message: error.message,
     })
