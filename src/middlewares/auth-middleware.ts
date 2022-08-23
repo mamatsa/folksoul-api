@@ -25,7 +25,9 @@ const protect = async (req: Request, res: Response, next: NextFunction) => {
 
       next()
     } catch (error: any) {
-      res.json({ status: 'fail', data: { message: 'not authorized' } })
+      res
+        .status(401)
+        .json({ status: 'fail', data: { message: 'not authorized' } })
     }
   }
 
