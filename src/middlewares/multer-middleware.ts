@@ -4,7 +4,7 @@ import multer from 'multer'
 // Image save destination in filesystem
 const fileStorage = multer.diskStorage({
   destination: (_: Request, __: any, cb) => {
-    cb(null, 'images')
+    cb(null, 'public/images')
   },
   filename: (_: Request, file, cb) => {
     cb(null, new Date().toISOString() + '-' + file.originalname)
