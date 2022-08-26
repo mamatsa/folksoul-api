@@ -16,7 +16,7 @@ import { bandMemberSchema } from 'schemas'
 
 const router = Router()
 
-router.get('/band-members', protect, getMembers)
+router.get('/band-members', getMembers)
 router.post('/band-member', protect, validateBody(bandMemberSchema), addMember)
 router.put(
   '/band-member/avatar/:id',

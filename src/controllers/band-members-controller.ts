@@ -6,7 +6,7 @@ import fs from 'fs/promises'
 
 // @desc     Get all band members
 // @route    GET /band-members
-// @access   Private
+// @access   Public
 export const getMembers = asyncHandler(async (_: Request, res: Response) => {
   const bandMembers = await BandMember.find()
   res.status(200).json({ status: 'success', data: { bandMembers } })
