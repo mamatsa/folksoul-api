@@ -5,6 +5,8 @@ info:
   version: 1.0.0
 
 servers:
+  - url: https://folksoul-api.otar.redberryinternship.ge
+    description: production server
   - url: http://localhost:8000/
     description: local server
 components:
