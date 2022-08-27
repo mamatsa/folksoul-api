@@ -12,6 +12,14 @@ export const getMembers = asyncHandler(async (_: Request, res: Response) => {
   res.status(200).json({ status: 'success', data: { bandMembers } })
 })
 
+// @desc     Get specific band member
+// @route    GET /band-member/:id
+// @access   Public
+export const getMember = asyncHandler(async (req: Request, res: Response) => {
+  const bandMember = await BandMember.findById(req.params.id)
+  res.status(200).json({ status: 'success', data: { bandMember } })
+})
+
 // @desc     Add new band member
 // @route    POST /band-member
 // @access   Private

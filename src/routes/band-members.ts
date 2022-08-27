@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import {
   getMembers,
+  getMember,
   addMember,
   addMemberAvatar,
   updateMember,
@@ -17,6 +18,7 @@ import { bandMemberSchema } from 'schemas'
 const router = Router()
 
 router.get('/band-members', getMembers)
+router.get('/band-member/:id', validateParams, getMember)
 router.post('/band-member', protect, validateBody(bandMemberSchema), addMember)
 router.put(
   '/band-member/avatar/:id',
