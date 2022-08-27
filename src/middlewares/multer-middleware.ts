@@ -16,7 +16,8 @@ const fileFilter = (_: Request, file: any, cb: any) => {
   if (
     file.mimetype === 'image/png' ||
     file.mimetype === 'image/jpg' ||
-    file.mimetype === 'image/jpeg'
+    file.mimetype === 'image/jpeg' ||
+    file.mimetype === 'image/svg+xml'
   ) {
     cb(null, true)
   } else {
