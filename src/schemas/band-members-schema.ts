@@ -38,7 +38,7 @@ const bandMemberSchema = Joi.object({
     }),
   bio: Joi.string()
     .required()
-    .pattern(new RegExp(/^[ა-ჰ\s]*$/))
+    .pattern(new RegExp(/^[ა-ჰ.:,!?"-\s]*$/))
     .messages({
       'any.required': 'bio field is required',
       'string.base': 'bio field should be string',
