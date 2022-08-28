@@ -3,15 +3,16 @@ import bcrypt from 'bcryptjs'
 import { Admin } from 'models'
 import { Request, Response } from 'express'
 import asyncHandler from 'express-async-handler'
+import { LoginBody } from 'types'
 
 // @desc     Authenticate a user
 // @route    POST /login
 // @access   Public
 const login = asyncHandler(async (req: Request, res: Response) => {
-  const body = req.body
+  const body: LoginBody = req.body
 
   // Find admin using nickname
-  const admin = await Admin.findOne({ nickname: body.nickname as string })
+  const admin = await Admin.findOne({ nickname: body.nickname })
   if (!admin) {
     res.status(400)
     throw new Error('wrong nickname or password')
