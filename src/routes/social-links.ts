@@ -1,5 +1,11 @@
 import { Router } from 'express'
-import { multerMiddleware } from 'middlewares'
+import {
+  multerMiddleware,
+  validateBody,
+  validateParams,
+  protect,
+} from 'middlewares'
+import { socialLinkSchema } from 'schemas'
 import {
   getSocialLinks,
   getSocialLink,
@@ -12,12 +18,28 @@ import {
 const router = Router()
 
 router.get('/social-links', getSocialLinks)
-router.post('/social-link', addSocialLink)
-router.put('/social-link/icon/:id', multerMiddleware, addSocialLinkIcon)
+router.post(
+  '/social-link',
+  protect,
+  validateBody(socialLinkSchema),
+  addSocialLink
+)
+router.put(
+  '/social-link/icon/:id',
+  protect,
+  validateParams,
+  multerMiddleware,
+  addSocialLinkIcon
+)
 router
   .route('/social-link/:id')
-  .get(getSocialLink)
-  .put(updateSocialLink)
-  .delete(deleteSocialLink)
+  .get(validateParams, getSocialLink)
+  .put(
+    protect,
+    validateParams,
+    validateBody(socialLinkSchema),
+    updateSocialLink
+  )
+  .delete(protect, validateParams, deleteSocialLink)
 
 export default router
