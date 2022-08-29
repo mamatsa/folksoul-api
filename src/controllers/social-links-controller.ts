@@ -19,6 +19,10 @@ export const getSocialLinks = asyncHandler(
 export const getSocialLink = asyncHandler(
   async (req: Request, res: Response) => {
     const socialLink = await SocialLink.findById(req.params.id)
+    if (!socialLink) {
+      res.status(400)
+      throw new Error('wrong social link id')
+    }
     res.status(200).json({ status: 'success', data: { socialLink } })
   }
 )
