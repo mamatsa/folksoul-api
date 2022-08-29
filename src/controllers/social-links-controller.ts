@@ -102,6 +102,10 @@ export const deleteSocialLink = asyncHandler(
       throw new Error('wrong social link id')
     }
     await socialLink.remove()
+    // Remove social link icon
+    if (socialLink && socialLink.iconUrl) {
+      await fs.unlink(socialLink.iconUrl)
+    }
     res.status(200).json({ status: 'success', data: null })
   }
 )

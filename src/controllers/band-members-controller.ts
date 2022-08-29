@@ -97,6 +97,10 @@ export const deleteMember = asyncHandler(
       throw new Error('wrong band member id')
     }
     await bandMember.remove()
+    // Remove member avatar
+    if (bandMember && bandMember.avatarUrl) {
+      await fs.unlink(bandMember.avatarUrl)
+    }
     res.status(200).json({ status: 'success', data: null })
   }
 )
