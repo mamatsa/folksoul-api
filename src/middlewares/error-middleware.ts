@@ -6,7 +6,6 @@ const errorHandler = (
   res: Response,
   __: NextFunction
 ) => {
-  console.log(res.statusCode)
   if (!res.statusCode || res.statusCode === 200) {
     res.status(500).json({
       status: 'error',
