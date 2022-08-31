@@ -2,7 +2,12 @@ import 'dotenv/config'
 import express from 'express'
 import cors from 'cors'
 import { connectMongo } from 'config'
-import { loginRoute, bandMemberRoutes, socialLinkRoutes } from 'routes'
+import {
+  loginRoute,
+  bandMemberRoutes,
+  socialLinkRoutes,
+  bandRoutes,
+} from 'routes'
 import { errorMiddleware, swaggerMiddleware } from 'middlewares'
 
 connectMongo()
@@ -19,6 +24,7 @@ server.use(express.urlencoded({ extended: false }))
 server.use(loginRoute)
 server.use(bandMemberRoutes)
 server.use(socialLinkRoutes)
+server.use(bandRoutes)
 
 server.use(errorMiddleware)
 
