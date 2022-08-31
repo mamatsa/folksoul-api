@@ -70,8 +70,6 @@ paths:
       summary: Get band members list
       tags:
         - Band Members
-      security:
-        - bearerAuth: []
       responses:
         '200':
           description: Band members received successfully
@@ -108,8 +106,6 @@ paths:
                           orbitWidth: 10
                           color: '#ffffff'
                           bio: ბიოგრაფია
-        '401':
-          description: Not authorized
 
   /band-member:
     post:
@@ -169,7 +165,7 @@ paths:
             type: string
           description: Band member id
       requestBody:
-        description: Only png, jpg and jpeg photo formats are allowed
+        description: Only png, jpg, jpeg and svg photo formats are allowed
         required: true
         content:
           multipart/form-data:
@@ -189,6 +185,55 @@ paths:
         '422':
           description: No image or invalid id provided
   /band-member/{id}:
+    get:
+      summary: Get single band member
+      tags:
+        - 'Band Members'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Band member id
+      responses:
+        '200':
+          description: Band member received successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  data:
+                    type: object
+                    properties:
+                      bandMember:
+                        type: object
+                        properties:
+                          _id:
+                            type: string
+                          instrument:
+                            type: string
+                          orbitWidth:
+                            type: number
+                          color:
+                            type: string
+                          bio:
+                            type: string
+                        example:
+                          _id: 123
+                          name: ხვიჩა
+                          instrument: გიტარა
+                          orbitWidth: 10
+                          color: '#ffffff'
+                          bio: ბიოგრაფია
+        '400':
+          description: Wrong band member id
+        '422':
+          description: Invalid id param formation
     put:
       summary: Update band member
       tags:
@@ -262,3 +307,208 @@ paths:
           description: Not authorized
         '422':
           description: Band member id provided in invalid format
+
+  /social-links:
+    get:
+      summary: Get social links list
+      tags:
+        - Social Links
+      responses:
+        '200':
+          description: Social links received successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  data:
+                    type: object
+                    properties:
+                      socialLinks:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            _id:
+                              type: string
+                            name:
+                              type: string
+                            link:
+                              type: string
+                        example:
+                          _id: 123
+                          name: facebook
+                          link: https://facebook.com/folksoul
+  /social-link:
+    post:
+      summary: Add social link
+      tags:
+        - Social Links
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                link:
+                  type: string
+              example:
+                name: facebook
+                link: https://facebook.com/folksoul
+              required:
+                - name
+                - link
+      responses:
+        '200':
+          description: Social link added successfully
+        '401':
+          description: Not authorized
+        '422':
+          description: Invalid request body formation
+
+  /social-link/icon/{id}:
+    put:
+      summary: Add icon to social link
+      tags:
+        - Social Links
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Social link id
+      requestBody:
+        description: Only png, jpg, jpeg and svg photo formats are allowed
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                image:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: Icon added successfully
+        '400':
+          description: Wrong social link id
+        '401':
+          description: Not authorized
+        '422':
+          description: No image or invalid id provided
+  /social-link/{id}:
+    get:
+      summary: Get single social link
+      tags:
+        - 'Social Links'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Social link id
+      responses:
+        '200':
+          description: Social link received successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  data:
+                    type: object
+                    properties:
+                      socialLink:
+                        type: object
+                        properties:
+                          _id:
+                            type: string
+                          name:
+                            type: string
+                          link:
+                            type: string
+                        example:
+                          _id: 123
+                          name: facebook
+                          link: https://facebook.com/folksoul
+        '400':
+          description: Wrong social link id
+        '422':
+          description: Invalid id param formation
+    put:
+      summary: Update social link
+      tags:
+        - 'Social Links'
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Social link id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                link:
+                  type: string
+              example:
+                name: instagram
+                link: https://instagram.com/folksoul
+              required:
+                - name
+                - link
+      responses:
+        '200':
+          description: Social link updated successfully
+        '400':
+          description: Wrong social link id
+        '401':
+          description: Not authorized
+        '422':
+          description: Invalid request body or id param formation
+    delete:
+      summary: Delete social link
+      tags:
+        - 'Social Links'
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Social link id
+      responses:
+        '200':
+          description: Social link deleted successfully
+        '400':
+          description: Social link id
+        '401':
+          description: Not authorized
+        '422':
+          description: Social link id provided in invalid format

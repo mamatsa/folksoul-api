@@ -17,6 +17,10 @@ export const getMembers = asyncHandler(async (_: Request, res: Response) => {
 // @access   Public
 export const getMember = asyncHandler(async (req: Request, res: Response) => {
   const bandMember = await BandMember.findById(req.params.id)
+  if (!bandMember) {
+    res.status(400)
+    throw new Error('wrong member id')
+  }
   res.status(200).json({ status: 'success', data: { bandMember } })
 })
 
@@ -97,6 +101,10 @@ export const deleteMember = asyncHandler(
       throw new Error('wrong band member id')
     }
     await bandMember.remove()
+    // Remove member avatar
+    if (bandMember && bandMember.avatarUrl) {
+      await fs.unlink(bandMember.avatarUrl)
+    }
     res.status(200).json({ status: 'success', data: null })
   }
 )
