@@ -512,3 +512,83 @@ paths:
           description: Not authorized
         '422':
           description: Social link id provided in invalid format
+  /band-information:
+    get:
+      summary: Get information about band
+      tags:
+        - About Band
+      responses:
+        '200':
+          description: Band info received successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  data:
+                    type: object
+                    properties:
+                      band:
+                        type: object
+                        properties:
+                          about:
+                            type: string
+                          imageUrl:
+                            type: string
+                        example:
+                          about: ინფორმაცია ბენდის შესახებ
+                          imageUrl: /public/images/folksoul.png
+    put:
+      summary: Update band info
+      tags:
+        - About Band
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                about:
+                  type: string
+              example:
+                about: ინფორმაცია ბენდის შესახებ
+              required:
+                - about
+      responses:
+        '200':
+          description: Band info updated successfully
+        '401':
+          description: Not authorized
+        '422':
+          description: Invalid request body
+  /band-image:
+    put:
+      summary: Add or update band image
+      tags:
+        - About Band
+      security:
+        - bearerAuth: []
+      requestBody:
+        description: Only png, jpg, jpeg and svg photo formats are allowed
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                image:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: Image modified successfully
+        '401':
+          description: Not authorized
+        '422':
+          description: No image provided
